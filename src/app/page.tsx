@@ -7,6 +7,8 @@ import CanvasDisplay from '@/components/CanvasDisplay';
 export default function HomePage() {
   const [text, setText] = useState('WordArt Studio');
   const [font, setFont] = useState('Impact');
+  const [insertTrigger, setInsertTrigger] = useState(0); // For triggering insertion
+  
 
   return (
     <main className="p-8 min-h-screen bg-gray-100">
