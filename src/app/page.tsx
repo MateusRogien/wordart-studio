@@ -20,6 +20,7 @@ export default function HomePage() {
   const handleInsert = async () => {
     if (!imageRef.current) return;
     try {
+      console.log("Insert button clicked");
       const dataUrl = await htmlToImage.toPng(imageRef.current);
       setImageDataUrl(dataUrl);
       setInsertTrigger((prev) => prev + 1);
