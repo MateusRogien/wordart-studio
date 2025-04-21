@@ -3,8 +3,12 @@ import React, { useRef, useState } from 'react';
 import TextInput from '@/components/TextInput';
 import FontSelector from '@/components/FontSelector';
 import InsertButton from '@/components/InsertButton';
-import KonvaCanvas from '@/components/KonvaCanvas';
+import dynamic from 'next/dynamic';
 import * as htmlToImage from 'html-to-image';
+
+const KonvaCanvas = dynamic(() => import('@/components/KonvaCanvas'), {
+  ssr: false
+});
 
 export default function HomePage() {
   const [text, setText] = useState('WordArt Studio');
