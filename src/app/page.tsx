@@ -21,7 +21,20 @@ export default function HomePage() {
     if (!imageRef.current) return;
     try {
       console.log("Insert button clicked");
-      const dataUrl = await htmlToImage.toPng(imageRef.current);
+      
+      // Create a temporary clone for capture
+      const clone = imageRef.current.cloneNode(true) as HTMLElement;
+      clone.style.position = 'fixed';
+      clone.style.top = '0';
+      clone.style.left = '0';
+      clone.style.backgroundColor = '#fff';
+      clone.style.zIndex = '-1';
+      clone.style.display = 'block'; // Ensure clone is visible
+      document.body.appendChild(clone);
+
+      const dataUrl = await htmlToImage.toPng(clone);
+      document.body.removeChild(clone);
+      
       setImageDataUrl(dataUrl);
       setInsertTrigger((prev) => prev + 1);
     } catch (error) {
@@ -39,16 +52,18 @@ export default function HomePage() {
         <KonvaCanvas insertTrigger={insertTrigger} imageDataUrl={imageDataUrl} />
       </div>
 
-      {/* Hidden styled WordArt to convert */}
+      {/* Off-screen preview */}
       <div
         ref={imageRef}
         style={{
           fontFamily: font,
           fontSize: '64px',
           color: '#000',
-          padding: '20px',
+          backgroundColor: 'transparent',
+          width: 'fit-content',
           position: 'absolute',
-          left: '-9999px', // hide off-screen
+          left: '-9999px', // Position off-screen
+          top: '-9999px',
         }}
       >
         {text}
