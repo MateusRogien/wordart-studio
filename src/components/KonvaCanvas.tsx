@@ -56,9 +56,26 @@ const KonvaCanvas = ({ insertTrigger, imageDataUrl }: Props) => {
     }
   }, [selectedId]);
 
+  const handleDelete = () => {
+    if (selectedId !== null) {
+      setImages(images.filter(img => img.id !== selectedId));
+      setSelectedId(null);
+    }
+  };
+
   return (
-    <div ref={containerRef} className="w-full h-full">
-      <Stage width={dimensions.width} height={dimensions.height} className="bg-white border shadow-md">
+    <div ref={containerRef} className="w-full h-full relative">
+      <Stage 
+        width={dimensions.width} 
+        height={dimensions.height} 
+        className="bg-white border shadow-md"
+        onClick={(e) => {
+          // Deselect when clicking on empty space
+          if (e.target === e.target.getStage()) {
+            setSelectedId(null);
+          }
+        }}
+      >
         <Layer>
           {images.map((item) => (
             <KonvaImage
@@ -106,6 +123,14 @@ const KonvaCanvas = ({ insertTrigger, imageDataUrl }: Props) => {
           )}
         </Layer>
       </Stage>
+      {selectedId !== null && (
+        <button
+          onClick={handleDelete}
+          className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors"
+        >
+          Delete
+        </button>
+      )}
     </div>
   );
 };
