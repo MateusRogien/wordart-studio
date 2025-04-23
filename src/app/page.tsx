@@ -27,7 +27,7 @@ export default function HomePage() {
       clone.style.position = 'fixed';
       clone.style.top = '0';
       clone.style.left = '0';
-      clone.style.backgroundColor = '#fff';
+      clone.style.backgroundColor = 'transparent';
       clone.style.zIndex = '-1';
       clone.style.display = 'block'; // Ensure clone is visible
       document.body.appendChild(clone);
